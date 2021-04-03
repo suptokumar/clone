@@ -13,10 +13,7 @@
 * */
 
 function program_under_age_remove(this_value) {
-
     if (!(rowNum < 1)) {
-
-        rowNum--;
 
 
         var to_be_removed = $(this_value).parent().parent().find('select');
