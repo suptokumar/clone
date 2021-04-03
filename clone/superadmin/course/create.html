@@ -1416,6 +1416,8 @@ opacity:.7;
 
 
                     <br><br>
+                    <div class="clonoe">
+                        
                             <div class = "" id = "clone_under_age0">
                     <div class="row" >
 
@@ -1449,10 +1451,11 @@ opacity:.7;
                             <!--program summer fee end-->
                         </div>
                         <div class="col-md-4 mt-4 pt-3">
-                            <i class="fa fa-plus-circle"  aria-hidden="true" id="program_under_age_add"></i>
+                            <i class="fa fa-plus-circle" onclick="program_under_age_adds(this)" data-id='0'  aria-hidden="true" id="program_under_age_add"></i>
                             <i class="fa fa-minus" aria-hidden="true" onclick = "program_under_age_remove($(this))" id="program_under_age_remove0"></i>
                             <!--program summer fee end-->
                         </div>
+                    </div>
                     </div>
                     </div>
 
@@ -2325,7 +2328,7 @@ opacity:.7;
     <!-- plugins:js -->
 		  <script type="text/javascript" src="../../../../cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    <script type="text/javascript" src="../../../../cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>    <script type="text/javascript">toastr.options = {"closeButton":true,"closeClass":"toast-close-button","closeDuration":300,"closeEasing":"swing","closeHtml":"<button><i class=\"icon-off\"><\/i><\/button>","closeMethod":"fadeOut","closeOnHover":true,"containerId":"toast-container","debug":false,"escapeHtml":false,"extendedTimeOut":10000,"hideDuration":1000,"hideEasing":"linear","hideMethod":"fadeOut","iconClass":"toast-info","iconClasses":{"error":"toast-error","info":"toast-info","success":"toast-success","warning":"toast-warning"},"messageClass":"toast-message","newestOnTop":false,"onHidden":null,"onShown":null,"positionClass":"toast-top-right","preventDuplicates":true,"progressBar":true,"progressClass":"toast-progress","rtl":false,"showDuration":300,"showEasing":"swing","showMethod":"fadeIn","tapToDismiss":true,"target":"body","timeOut":5000,"titleClass":"toast-title","toastClass":"toast"};</script>
 
- <script src="../../assets/js/abhilash.js"></script>    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>    <!-- endinject -->    <!-- Plugin js for this page -->    <script src="../../assets/vendors/chart.js/Chart.min.js"></script>    <!-- End plugin js for this page -->    <!-- inject:js -->    <script src="../../assets/js/off-canvas.js"></script>    <script src="../../assets/js/hoverable-collapse.js"></script>    <script src="../../assets/js/misc.js"></script>    <!-- endinject -->    <!-- Custom js for this page -->    <script src="../../assets/js/dashboard.js"></script>    <script src="../../assets/js/todolist.js"></script>
+ <script src="../../assets/js/abhilash.js?vs=1.2"></script>    <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>    <!-- endinject -->    <!-- Plugin js for this page -->    <script src="../../assets/vendors/chart.js/Chart.min.js"></script>    <!-- End plugin js for this page -->    <!-- inject:js -->    <script src="../../assets/js/off-canvas.js"></script>    <script src="../../assets/js/hoverable-collapse.js"></script>    <script src="../../assets/js/misc.js"></script>    <!-- endinject -->    <!-- Custom js for this page -->    <script src="../../assets/js/dashboard.js"></script>    <script src="../../assets/js/todolist.js"></script>
 <script src="../../assets/datatables/datatables.min.js"></script>
 
  <script src="../../../../cdn.jsdelivr.net/npm/summernote%400.8.18/dist/summernote-bs4.min.js"></script>
@@ -2466,35 +2469,74 @@ var delete_on_confirm= "Are You Sure You Wanna Delete";
 
         var delete_program_multi = 1;
 
-        $("#clone_under_age"+rowNum).find(".fa-plus-circle").click(function(){
+        function program_under_age_adds(t){
+            var id = $(t).attr('data-id');
             delete_program_multi++;
 
-            var clone_element = $('#clone_under_age' + rowNum).find("#program_under_age_range_option" + (delete_program_multi -2)).clone();
-            clone_element.insertAfter('#clone_under_age' + rowNum);
-            clone_element.attr('id', "program_under_age_range_option" + delete_program_multi);//making increment of select element id
-            clone_element.multiselect({ includeSelectAllOption: true});
+            // var clone_element = $('#clone_under_age' + rowNum).find("#program_under_age_range_option" + (delete_program_multi -2)).clone();
+console.log(rowNum);
 
-            var clone_element2 = $(this).parents().find('#clone_under_age' + rowNum).clone(true);
-            var to_be_removed_multiselect= clone_element2.find('select').attr('id', "program_under_age_range_option" + delete_program_multi);
-            console.log(to_be_removed_multiselect);
-                    $(to_be_removed_multiselect).next().remove();
-                $(to_be_removed_multiselect).remove();
+            $('.clonoe').append('<div id="clone_under_age' + (rowNum+1) +'"></div>');
+            $('#clone_under_age' + (rowNum+1)).html($('#clone_under_age' + id).html());
+            $('#clone_under_age' + (rowNum+1) + " .multiselect-native-select").remove();
+            var select_form = $('#clone_under_age0 #program_under_age_range_option0').html();
+            select_form_full='<select name="under_age[0][age]" id="program_under_age_range_option'+(rowNum+1)+'" multiple="multiple" class="3col active tobehided">'+select_form+'</select>';
+            $(select_form_full).insertBefore('#clone_under_age' + (rowNum+1) + ' #under_age_program_increment');
+            $("#program_under_age_range_option"+(rowNum+1)).multiselect();
+            $('#clone_under_age' + (rowNum+1)).find('#program_under_age_add').attr('data-id', (rowNum+1));
+            // clone_element.attr('id', "program_under_age_range_option" + delete_program_multi);//making increment of select element id
+            // clone_element.multiselect({ includeSelectAllOption: true});
+
+            // var clone_element2 = $(this).parents().find('#clone_under_age' + rowNum).clone(true);
+            // var to_be_removed_multiselect= clone_element2.find('select').attr('id', "program_under_age_range_option" + delete_program_multi);
+            // console.log(to_be_removed_multiselect);
+            //         $(to_be_removed_multiselect).next().remove();
+            //     $(to_be_removed_multiselect).remove();
 
             rowNum++
 
-            clone_element2.attr('id', "program_under_age_range_option" + delete_program_multi);//making increment of select element id
-            clone_element2.attr('id', 'clone_under_age' + rowNum);
-            clone_element2.find('select').next().remove();
-            clone_element2.find('select').remove();
-            clone_element2.insertAfter('#clone_under_age'+ (rowNum -1));
+            // clone_element2.attr('id', "program_under_age_range_option" + delete_program_multi);//making increment of select element id
+            // clone_element2.attr('id', 'clone_under_age' + rowNum);
+            // clone_element2.find('select').next().remove();
+            // clone_element2.find('select').remove();
+            // clone_element2.insertAfter('#clone_under_age'+ (rowNum -1));
 
-            clone_element2.find('select').multiselect();
-
-
+            // clone_element2.find('select').multiselect();
 
 
 
-        });
+
+        }
+
+// $("#clone_under_age"+rowNum).find(".fa-plus-circle").click(function(){
+//     delete_program_multi++;
+
+//     var clone_element = $('#clone_under_age' + rowNum).find("#program_under_age_range_option" + (delete_program_multi -2)).clone();
+//     clone_element.insertAfter('#clone_under_age' + rowNum);
+//     clone_element.attr('id', "program_under_age_range_option" + delete_program_multi);//making increment of select element id
+//     clone_element.multiselect({ includeSelectAllOption: true});
+
+//     var clone_element2 = $(this).parents().find('#clone_under_age' + rowNum).clone(true);
+//     var to_be_removed_multiselect= clone_element2.find('select').attr('id', "program_under_age_range_option" + delete_program_multi);
+//     console.log(to_be_removed_multiselect);
+//             $(to_be_removed_multiselect).next().remove();
+//         $(to_be_removed_multiselect).remove();
+
+//     rowNum++
+
+//     clone_element2.attr('id', "program_under_age_range_option" + delete_program_multi);//making increment of select element id
+//     clone_element2.attr('id', 'clone_under_age' + rowNum);
+//     clone_element2.find('select').next().remove();
+//     clone_element2.find('select').remove();
+//     clone_element2.insertAfter('#clone_under_age'+ (rowNum -1));
+
+//     clone_element2.find('select').multiselect();
+
+
+
+
+
+// });
         $(document).ready(function () {
             $('select[multiple].active2.3col').multiselect({
 
